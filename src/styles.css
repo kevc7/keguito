@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Times New Roman", Times, serif;
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Add some additional styles for better button appearance */
+button:focus {
+  outline: none;
+}
