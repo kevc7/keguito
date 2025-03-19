@@ -1,8 +1,6 @@
 // src/app/app.component.ts
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -73,16 +71,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
             <span class="volume-label">🔊 {{ volume }}%</span>
           </div>
         </div>
-        
-        <div class="music-container" *ngIf="isPlaying">
-          <iframe 
-            #youtubePlayer
-            [src]="currentSongUrl" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-          </iframe>
-        </div>
+
+        <audio #audioPlayer (ended)="onSongEnd()" preload="auto"></audio>
       </div>
     </div>
   `,
@@ -334,18 +324,17 @@ import { trigger, transition, style, animate } from '@angular/animations';
     }
   `]
 })
-export class AppComponent {
-  @ViewChild('youtubePlayer') youtubePlayer!: ElementRef;
-  currentSongUrl!: SafeResourceUrl;
+export class AppComponent implements AfterViewInit {
+  @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>;
   isPlaying = false;
   volume = 50;
   currentSongIndex = 0;
   currentSlide = 0;
 
   songs = [
-    'rkI034qKG7o', // Canción original
-    'Sl0-Y1cHFBI', // Nueva canción 1
-    'muTUmQnqGDY'  // Nueva canción 2
+    'assets/songs/song1.mp3',
+    'assets/songs/song2.mp3',
+    'assets/songs/song3.mp3'
   ];
 
   images = [
@@ -359,34 +348,58 @@ export class AppComponent {
     'assets/imagenes/img6.jpeg',
     'assets/imagenes/img10.jpeg'
   ];
-  
-  constructor(private sanitizer: DomSanitizer) {
-    this.updateCurrentSong();
+
+  ngAfterViewInit() {
+    const audio = this.audioPlayer.nativeElement;
+    audio.volume = this.volume / 100;
+    audio.src = this.songs[this.currentSongIndex];
+    audio.load();
   }
 
-  updateCurrentSong() {
-    const videoId = this.songs[this.currentSongIndex];
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
-    this.currentSongUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+  async loadAndPlaySong() {
+    const audio = this.audioPlayer.nativeElement;
+    audio.src = this.songs[this.currentSongIndex];
+    try {
+      await audio.load();
+      if (this.isPlaying) {
+        await audio.play();
+      }
+    } catch (error) {
+      console.error('Error loading or playing audio:', error);
+    }
   }
 
-  changeSong(index: number) {
-    this.currentSongIndex = index;
-    this.updateCurrentSong();
+  toggleMusic() {
+    const audio = this.audioPlayer.nativeElement;
+    this.isPlaying = !this.isPlaying;
+    
+    if (this.isPlaying) {
+      audio.play().catch(error => {
+        console.error('Error playing audio:', error);
+        this.isPlaying = false;
+      });
+    } else {
+      audio.pause();
+    }
   }
 
   adjustVolume(event: any) {
     this.volume = event.target.value;
-    const iframe = this.youtubePlayer.nativeElement;
-    iframe.contentWindow.postMessage(JSON.stringify({
-      event: 'command',
-      func: 'setVolume',
-      args: [this.volume]
-    }), '*');
+    this.audioPlayer.nativeElement.volume = this.volume / 100;
   }
-  
-  toggleMusic() {
-    this.isPlaying = !this.isPlaying;
+
+  async nextSong() {
+    this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+    await this.loadAndPlaySong();
+  }
+
+  async prevSong() {
+    this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
+    await this.loadAndPlaySong();
+  }
+
+  onSongEnd() {
+    this.nextSong();
   }
 
   nextSlide() {
@@ -399,15 +412,5 @@ export class AppComponent {
 
   goToSlide(index: number) {
     this.currentSlide = index;
-  }
-
-  nextSong() {
-    this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
-    this.updateCurrentSong();
-  }
-
-  prevSong() {
-    this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
-    this.updateCurrentSong();
   }
 }
