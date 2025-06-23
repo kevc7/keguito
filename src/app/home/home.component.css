@@ -1,0 +1,108 @@
+.main-container {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-image: url('/assets/imagenes/main-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.content-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+a.no-underline {
+  text-decoration: none;
+}
+
+.main-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+.love-button-base {
+  display: inline-block;
+  padding: 1rem 2rem;
+  backdrop-filter: blur(4px);
+  border-width: 2px;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.3s;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  text-decoration: none;
+  text-align: center;
+}
+
+.love-button-base:hover {
+  transform: scale(1.05);
+}
+
+.bg-pink-500\/30 {
+  background-color: rgba(236, 72, 153, 0.3);
+}
+.border-pink-300\/50 {
+  border-color: rgba(249, 168, 212, 0.5);
+}
+.hover\:bg-pink-500\/40:hover {
+  background-color: rgba(236, 72, 153, 0.4);
+}
+
+.bg-blue-500\/30 {
+  background-color: rgba(59, 130, 246, 0.3);
+}
+.border-blue-300\/50 {
+  border-color: rgba(147, 197, 253, 0.5);
+}
+.hover\:bg-blue-500\/40:hover {
+  background-color: rgba(59, 130, 246, 0.4);
+}
+
+.bg-purple-500\/30 {
+  background-color: rgba(168, 85, 247, 0.3);
+}
+.border-purple-300\/50 {
+  border-color: rgba(209, 196, 247, 0.5);
+}
+.hover\:bg-purple-500\/40:hover {
+  background-color: rgba(168, 85, 247, 0.4);
+}
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.sm\:flex-row {
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+}
+.gap-6 { gap: 1.5rem; }
+.mt-8 { margin-top: 2rem; }

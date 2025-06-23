@@ -1,0 +1,231 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.marzo-container {
+  min-height: 100vh;
+  background-color: #0d0d0d;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+  color: #e0e0e0;
+  padding: 2rem;
+  font-family: 'Georgia', 'Times New Roman', Times, serif;
+}
+
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.back-button {
+  color: #f871b8;
+  text-decoration: none;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+
+.player-and-letter {
+  margin-top: 2rem;
+}
+
+.player-container {
+  margin-bottom: 2rem;
+}
+
+.play-button {
+  background-color: #f871b8;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 0 20px #f871b8, 0 0 30px #f871b8;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.play-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #f871b8, 0 0 40px #f871b8;
+}
+
+.play-button span {
+    font-size: 1rem;
+}
+
+.letter-content {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.letter-content p {
+  margin-bottom: 1.5em;
+}
+
+/* Slider Styles */
+.slider-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 40px auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 500px; /* Adjust as needed */
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.slider-controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.slider-button {
+  background: rgba(40, 40, 40, 0.6);
+  border: none;
+  color: white;
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+  pointer-events: auto;
+}
+
+.slider-button:hover {
+  background: rgba(60, 60, 60, 0.8);
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.slider-dots span {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.slider-dots span.active {
+  background: #f871b8;
+}
+
+/* New Music Controls Styles */
+.song-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.song-nav-button {
+  background-color: rgba(248, 113, 184, 0.4);
+  color: white;
+  border: 1px solid rgba(248, 113, 184, 0.8);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.song-nav-button:hover {
+  background-color: rgba(248, 113, 184, 0.7);
+}
+
+.song-indicator {
+  color: white;
+  font-size: 1rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f871b8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.volume-label {
+  color: white;
+  font-size: 0.9rem;
+  min-width: 50px;
+}

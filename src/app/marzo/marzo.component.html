@@ -1,0 +1,68 @@
+<div class="marzo-container">
+  <div class="content-wrapper">
+    <a routerLink="/" class="back-button">&larr; Volver</a>
+    
+    <div class="player-and-letter">
+      <div class="player-container">
+        <button class="play-button" (click)="toggleMusic()">
+          <span>♥</span> {{ isPlaying ? 'Pause' : 'Play' }} <span>♥</span>
+        </button>
+        
+        <div class="song-controls" *ngIf="isPlaying">
+          <button class="song-nav-button" (click)="prevSong()">
+            ◄◄
+          </button>
+          <span class="song-indicator">Canción {{ currentSongIndex + 1 }}</span>
+          <button class="song-nav-button" (click)="nextSong()">
+            ►►
+          </button>
+        </div>
+        
+        <div class="volume-control" *ngIf="isPlaying">
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            [value]="volume" 
+            (input)="adjustVolume($event)"
+            class="volume-slider"
+          >
+          <span class="volume-label">🔊 {{ volume }}%</span>
+        </div>
+      </div>
+      
+      <div class="letter-content">
+        <p>Mi amor,</p>
+        <p>
+          Son las 7 de la mañana, un 17 de marzo, y no sé si la brisa que acaricia la ventana es el preludio de algo más, o si es el susurro tímido de tus palabras que resuenan en mi mente mientras el día apenas comienza. Me siento emocionado, como un niño que espera su regalo más preciado. En unos días te veré, y cuento los segundos como si se tratara de una eternidad. Mi mente, que a veces parece perderse entre las sombras del tiempo, solo sabe que te pertenece, que sigue el ritmo de tus pasos aunque a veces parezca callada.
+        </p>
+        <p>
+          Hace ya más de un mes que no te escribo cartas, pero no creas que este silencio ha sido vacío. No es que no te piense, ni que tu imagen se haya desvanecido en mis pensamientos. Al contrario, cada rincón de mi ser te lleva dentro, como si fueras la luna en mi noche más oscura. Pensar que te pedí ser parte de tu vida, que te pedí ser tu novio, me llena de una calidez extraña, porque siento que eso es solo el principio de algo mucho más grande. Te amo tanto, que la idea de seguir trabajando en nosotros me motiva, me impulsa, me da fuerzas para ser la mejor versión de mí mismo, para que este amor, este sueño que estamos creando, siga floreciendo.
+        </p>
+        <p>
+          Te amo, Kadley, con todo lo que soy. Con todo lo que sé y con todo lo que haré. Mi amor por ti no tiene límites, y cada vez que te pienso, que te imagino, que te siento cerca, me doy cuenta de que en este viaje que compartimos, no hay final, solo infinitos comienzos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Image Slider -->
+    <div class="slider-container">
+      <div class="slider" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+        <div *ngFor="let image of images" class="slide">
+          <img [src]="image" alt="Imagen de amor">
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button (click)="prevSlide()" class="slider-button">❮</button>
+        <button (click)="nextSlide()" class="slider-button">❯</button>
+      </div>
+      <div class="slider-dots">
+        <span *ngFor="let image of images; let i = index" 
+              [class.active]="i === currentSlide"
+              (click)="goToSlide(i)"></span>
+      </div>
+    </div>
+
+    <audio #audioPlayer (ended)="onSongEnd()" preload="auto"></audio>
+  </div>
+</div>

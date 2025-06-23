@@ -1,0 +1,81 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.mayo-container {
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+  background-image: url('/assets/imagenes/Lirio.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s;
+  text-decoration: none;
+  font-size: 1.125rem;
+}
+
+.back-button:hover {
+  color: white;
+}
+
+.letter-container {
+  max-width: 700px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(5px);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  font-family: 'Georgia', serif;
+  text-align: justify;
+}
+
+.letter-content {
+  color: white;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.letter-content p:first-child,
+.letter-content p:last-child {
+  font-weight: bold;
+}
+
+.letter-content p {
+  margin-bottom: 1.5rem;
+}
+
+.letter-content p:last-child {
+  margin-bottom: 0;
+}
