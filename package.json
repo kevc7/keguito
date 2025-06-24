@@ -1,5 +1,17 @@
 {
+  "name": "love-letter-page",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:love-letter-page": "node dist/love-letter-page/server/server.mjs"
+  },
+  "private": true,
   "devDependencies": {
+    "angular-cli-ghpages": "^2.0.3",
     "autoprefixer": "^10.4.0"
   }
 }
