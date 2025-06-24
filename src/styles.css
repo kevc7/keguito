@@ -4,9 +4,9 @@
 
 /* CSS Custom Properties for background images */
 :root {
-  --main-background: url('/assets/imagenes/main-background.jpg');
-  --lirio-background: url('/assets/imagenes/Lirio.jpg');
-  --junio-background: url('/assets/imagenes/junio-background.jpg');
+  --main-background: url('assets/imagenes/main-background.jpg');
+  --lirio-background: url('assets/imagenes/Lirio.jpg');
+  --junio-background: url('assets/imagenes/junio-background.jpg');
 }
 
 /* Cursores específicos para cada sección */
