@@ -1,5 +1,5 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ViewChild, ElementRef, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -36,8 +36,10 @@ export class MarzoComponent implements AfterViewInit {
     'assets/imagenes/img10.jpeg'
   ];
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit() {
-    if (this.audioPlayer) {
+    if (isPlatformBrowser(this.platformId) && this.audioPlayer && this.audioPlayer.nativeElement) {
       this.audioPlayer.nativeElement.src = this.songs[this.currentSongIndex];
       this.audioPlayer.nativeElement.load();
       this.audioPlayer.nativeElement.volume = this.volume / 100;
@@ -45,7 +47,7 @@ export class MarzoComponent implements AfterViewInit {
   }
 
   toggleMusic() {
-    if (this.audioPlayer) {
+    if (isPlatformBrowser(this.platformId) && this.audioPlayer && this.audioPlayer.nativeElement) {
       const audio = this.audioPlayer.nativeElement;
       this.isPlaying = !this.isPlaying;
       if (this.isPlaying) {
@@ -61,13 +63,13 @@ export class MarzoComponent implements AfterViewInit {
 
   adjustVolume(event: any) {
     this.volume = event.target.value;
-    if (this.audioPlayer) {
+    if (isPlatformBrowser(this.platformId) && this.audioPlayer && this.audioPlayer.nativeElement) {
       this.audioPlayer.nativeElement.volume = this.volume / 100;
     }
   }
 
   private loadAndPlaySong() {
-    if (this.audioPlayer) {
+    if (isPlatformBrowser(this.platformId) && this.audioPlayer && this.audioPlayer.nativeElement) {
       const audio = this.audioPlayer.nativeElement;
       audio.src = this.songs[this.currentSongIndex];
       audio.load();
