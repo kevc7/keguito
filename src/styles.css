@@ -9,8 +9,51 @@
   --junio-background: url('/assets/imagenes/junio-background.jpg');
 }
 
+/* Cursores específicos para cada sección */
+
+/* Cursores redimensionados listos para usar */
+
+/* Home - Teddy cursors (32x32 redimensionados) */
+.home-page * {
+  cursor: url('assets/imagenes/teddycursor_resized.png') 16 16, auto !important;
+}
+
+.home-page a, .home-page button, .home-page [role="button"], .home-page .clickable,
+.home-page .love-button-base, .home-page [routerLink] {
+  cursor: url('assets/imagenes/teddypointer_resized.png') 5 0, pointer !important;
+}
+
+/* Junio - Pochacco cursors (32x32 redimensionados) - intercambiados */
+.junio-page * {
+  cursor: url('assets/imagenes/pochaccopointer_resized.png') 16 16, auto !important;
+}
+
+.junio-page a, .junio-page button, .junio-page [role="button"], .junio-page .clickable,
+.junio-page .back-button, .junio-page [routerLink] {
+  cursor: url('assets/imagenes/pochaccocursor_resized.png') 5 0, pointer !important;
+}
+
+/* Marzo - Rets cursors (32x32 redimensionados) */
+.marzo-page * {
+  cursor: url('assets/imagenes/retscursor_resized.png') 16 16, auto !important;
+}
+
+.marzo-page a, .marzo-page button, .marzo-page [role="button"], .marzo-page .clickable,
+.marzo-page .back-button, .marzo-page [routerLink] {
+  cursor: url('assets/imagenes/retspointer_resized.png') 5 0, pointer !important;
+}
+
+/* Mayo - usando también los teddy cursors (32x32 redimensionados) */
+.mayo-page * {
+  cursor: url('assets/imagenes/teddycursor_resized.png') 16 16, auto !important;
+}
+
+.mayo-page a, .mayo-page button, .mayo-page [role="button"], .mayo-page .clickable,
+.mayo-page .back-button, .mayo-page [routerLink] {
+  cursor: url('assets/imagenes/teddypointer_resized.png') 5 0, pointer !important;
+}
+
 /* You can add global styles to this file, and also import other style files */
-/* src/styles.css */
 body, html {
   margin: 0;
   padding: 0;
@@ -24,4 +67,21 @@ body, html {
 /* Add some additional styles for better button appearance */
 button:focus {
   outline: none;
+}
+
+/* Mejoras para las transiciones suaves */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Estilos adicionales para mejorar las animaciones */
+.love-button-base {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.love-button-base:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
 }
