@@ -495,13 +495,35 @@
   transition: text-shadow 0.05s ease-out;
 }
 
+.hero-title-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
 .hero-name {
   font-size: clamp(3.5rem, 11vw, 6.2rem);
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 8px;
-  display: block;
-  margin-bottom: 2.5rem;
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.hero-cat-gif {
+  width: clamp(50px, 9vw, 75px);
+  height: clamp(50px, 9vw, 75px);
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(186, 230, 253, 0.75));
+  animation: floatCat 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatCat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+  100% { transform: translateY(0px) rotate(-2deg); }
 }
 
 /* Scroll button (matte retro pixel art, no neon) */
@@ -858,4 +880,123 @@
 .pixel-back-btn-bottom {
   font-size: 1.05rem;
   padding: 0.8rem 1.8rem;
+}
+
+/* Cute Black Cat Speech Balloon at End of Letter */
+.letter-cat-speech-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 2.8rem;
+  padding-right: 0.5rem;
+}
+
+.pixel-speech-balloon {
+  position: relative;
+  background-color: #0f172a;
+  color: #f1f5f9;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 0.85rem 1.35rem;
+  border: 2px solid #94a3b8;
+  border-radius: 8px;
+  box-shadow: 
+    0 -2px 0 0 #334155,
+    0 2px 0 0 #334155,
+    -2px 0 0 0 #334155,
+    2px 0 0 0 #334155,
+    0 4px 16px rgba(0, 0, 0, 0.6);
+  margin-bottom: 12px;
+  max-width: 290px;
+  text-align: center;
+  line-height: 1.4;
+  animation: floatBalloon 2.8s ease-in-out infinite;
+}
+
+@keyframes floatBalloon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.speech-tail {
+  position: absolute;
+  bottom: -9px;
+  right: 28px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #94a3b8;
+}
+
+.speech-tail::after {
+  content: '';
+  position: absolute;
+  top: -11px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #0f172a;
+}
+
+.letter-cat-avatar-wrapper {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letter-cat-avatar {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 4px 14px rgba(0, 0, 0, 0.75);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.letter-cat-avatar:hover {
+  transform: scale(1.12) rotate(-4deg);
+}
+
+@media (max-width: 640px) {
+  .hero-title-wrapper {
+    gap: 0.6rem;
+  }
+
+  .hero-cat-gif {
+    width: 44px;
+    height: 44px;
+  }
+
+  .letter-cat-speech-container {
+    align-items: center;
+    padding-right: 0;
+  }
+
+  .speech-tail {
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .letter-cat-avatar-wrapper {
+    margin-right: 0;
+  }
+
+  .pixel-speech-balloon {
+    font-size: 1rem;
+    max-width: 240px;
+    padding: 0.7rem 1rem;
+  }
+
+  .letter-cat-avatar {
+    width: 68px;
+    height: 68px;
+  }
 }

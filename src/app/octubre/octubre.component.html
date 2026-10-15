@@ -30,7 +30,10 @@
 
     <div class="hero-content">
       <h1 class="hero-title">
-        <span class="hero-name">Kadley</span>
+        <span class="hero-title-wrapper">
+          <span class="hero-name">Kadley</span>
+          <img src="assets/gato-celeste.gif" alt="Gato celeste" class="hero-cat-gif" />
+        </span>
       </h1>
 
       <button (click)="scrollToLetter()" class="scroll-down-btn pixel-box-btn">
@@ -125,9 +128,16 @@
           Espero poder haberme comportado estos días como el hombre que mereces tener de novio, espero haberte hecho la compañía que necesitas cuando sientes que no puedes sola y espero haberte solucionado los problemas que no pudiste resolver, porque es mi misión y lo que mereces, te amo, con todo lo que soy, y todo lo que sé.
         </p>
 
-        <p>
-          No te olvides de cortarme el pelito
-        </p>
+        <!-- Cute Cat Speech Balloon at End of Letter -->
+        <div class="letter-cat-speech-container">
+          <div class="pixel-speech-balloon">
+            <span class="speech-text">No te olvides de cortarme el pelito</span>
+            <span class="speech-tail"></span>
+          </div>
+          <div class="letter-cat-avatar-wrapper">
+            <img src="assets/gatonegro.webp" alt="Gatito negro" class="letter-cat-avatar" />
+          </div>
+        </div>
       </article>
     </div>
 
