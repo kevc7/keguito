@@ -11,7 +11,7 @@
   position: relative;
   min-height: 100vh;
   background-color: #07090e;
-  background-image: url('/assets/imagenes/pixilart_bg.png');
+  background-image: var(--octubre-bg);
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
@@ -414,7 +414,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/assets/imagenes/pixilart_bg.png');
+  background-image: var(--octubre-bg);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -966,6 +966,10 @@
 }
 
 @media (max-width: 640px) {
+  .octubre-page {
+    background-attachment: scroll;
+  }
+
   .hero-title-wrapper {
     gap: 0.6rem;
   }

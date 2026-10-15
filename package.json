@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy": "ng build --base-href /keguito/ && npx ngh --dir=dist/love-letter-page/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:love-letter-page": "node dist/love-letter-page/server/server.mjs"
