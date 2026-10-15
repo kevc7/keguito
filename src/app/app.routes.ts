@@ -3,6 +3,7 @@ import { JunioComponent } from './junio/junio.component';
 import { MarzoComponent } from './marzo/marzo.component';
 import { HomeComponent } from './home/home.component';
 import { MayoComponent } from './mayo/mayo.component';
+import { OctubreComponent } from './octubre/octubre.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -10,5 +11,7 @@ export const routes: Routes = [
     { path: 'junio', component: JunioComponent, data: { animation: 'JunioPage' } },
     { path: 'marzo', component: MarzoComponent, data: { animation: 'MarzoPage' } },
     { path: 'mayo', component: MayoComponent, data: { animation: 'MayoPage' } },
+    { path: 'octubre', component: OctubreComponent, data: { animation: 'OctubrePage' } },
+    { path: 'octubre-2026', redirectTo: '/octubre' },
     { path: '**', redirectTo: '/home' }
 ];

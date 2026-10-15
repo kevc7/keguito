@@ -1,0 +1,861 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #080b10;
+  color: #f1f5f9;
+  font-family: 'Pixelify Sans', 'Courier New', monospace;
+  overflow-x: hidden;
+}
+
+.octubre-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #07090e;
+  background-image: url('/assets/imagenes/pixilart_bg.png');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  image-rendering: pixelated;
+  --audio-bass: 0;
+  --audio-vol: 0;
+  --audio-scale: 1;
+  --audio-disc-scale: 1;
+  --audio-glow: 0px;
+  --audio-wave-scale: 1;
+}
+
+/* =========================================
+   STICKY TOP CONTROLS BAR
+========================================= */
+.pixel-navbar {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Back button (clean matte pixel art, no neon) */
+.pixel-btn {
+  pointer-events: auto;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #e2e8f0;
+  background-color: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(8px);
+  padding: 0.55rem 1.1rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid #64748b;
+  box-shadow: 
+    0 -2px 0 0 #1e293b,
+    0 2px 0 0 #1e293b,
+    -2px 0 0 0 #1e293b,
+    2px 0 0 0 #1e293b;
+  transition: all 0.15s ease;
+  image-rendering: pixelated;
+  user-select: none;
+}
+
+.pixel-btn:hover {
+  background-color: #334155;
+  color: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 
+    0 -2px 0 0 #475569,
+    0 2px 0 0 #475569,
+    -2px 0 0 0 #475569,
+    2px 0 0 0 #475569;
+  transform: translateY(-2px);
+}
+
+.pixel-btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================================
+   CIRCULAR SPOTIFY-STYLE VINYL PLAYER
+   (No song title, audio-reactive rotation & pulse)
+========================================= */
+.vinyl-player-widget {
+  pointer-events: auto;
+  position: relative;
+  width: 78px;
+  height: 78px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.5rem;
+  background-color: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  border: 2px solid #64748b;
+  box-shadow: 
+    0 -2px 0 0 #1e293b,
+    0 2px 0 0 #1e293b,
+    -2px 0 0 0 #1e293b,
+    2px 0 0 0 #1e293b;
+  transition: all 0.2s ease;
+}
+
+.vinyl-player-widget:hover {
+  border-color: #cbd5e1;
+  transform: scale(1.04);
+}
+
+/* Discrete Pixel Speech Bubble */
+.pixel-speech-bubble {
+  position: absolute;
+  top: -28px;
+  right: -25px;
+  background-color: rgba(15, 23, 42, 0.95);
+  color: #cbd5e1;
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border: 1px solid #475569;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.6);
+  pointer-events: none;
+  z-index: 10;
+  animation: floatBubble 2s infinite ease-in-out;
+  white-space: nowrap;
+}
+
+.pixel-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 10px;
+  border-width: 5px 5px 0;
+  border-style: solid;
+  border-color: #475569 transparent transparent transparent;
+}
+
+@keyframes floatBubble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Audio-reactive ripple wave rings */
+.vinyl-aura-wave {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(203, 213, 225, 0.45);
+  pointer-events: none;
+  transform-origin: center center;
+  transform: scale(var(--audio-wave-scale, 1));
+  opacity: calc(var(--audio-vol, 0) * 0.75);
+  transition: transform 0.05s ease-out, opacity 0.05s ease-out;
+}
+
+.vinyl-aura-wave.wave-2 {
+  width: 86px;
+  height: 86px;
+  border-color: rgba(148, 163, 184, 0.3);
+  transform: scale(calc(var(--audio-wave-scale, 1) * 1.15));
+  opacity: calc(var(--audio-vol, 0) * 0.45);
+}
+
+.vinyl-disc-container {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(var(--audio-disc-scale, 1));
+  transition: transform 0.05s ease-out;
+}
+
+/* The Vinyl Record Disc */
+.vinyl-disc {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: radial-gradient(circle, 
+    #1e293b 0%, 
+    #0c1017 28%, 
+    #1a2232 40%, 
+    #070a0f 65%, 
+    #151c28 80%, 
+    #05070a 100%
+  );
+  border: 1.5px solid #475569;
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.8),
+    inset 0 0 2px rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: spinVinyl 4s linear infinite;
+  animation-play-state: paused;
+}
+
+.vinyl-disc.spinning {
+  animation-play-state: running;
+}
+
+@keyframes spinVinyl {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Grooves on the vinyl */
+.vinyl-groove-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  pointer-events: none;
+}
+
+.ring-1 { width: 50px; height: 50px; }
+.ring-2 { width: 40px; height: 40px; }
+.ring-3 { width: 30px; height: 30px; }
+
+/* Specular light glare across vinyl surface */
+.vinyl-specular-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 45deg,
+    rgba(255, 255, 255, 0.14) 0deg,
+    transparent 35deg,
+    rgba(255, 255, 255, 0.09) 110deg,
+    transparent 180deg,
+    rgba(255, 255, 255, 0.14) 225deg,
+    transparent 300deg,
+    rgba(255, 255, 255, 0.09) 360deg
+  );
+  pointer-events: none;
+}
+
+/* Center Core Label */
+.vinyl-center-label {
+  position: relative;
+  z-index: 5;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #334155 0%, #1e293b 100%);
+  border: 1.5px solid #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.85);
+}
+
+.vinyl-center-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.state-icon.play-icon {
+  font-size: 8px;
+  color: #f8fafc;
+  margin-left: 1.5px;
+}
+
+.state-icon.moon-icon {
+  font-size: 11px;
+  color: #f1f5f9;
+}
+
+.vinyl-spindle-hole {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #07090e;
+  border: 1px solid #475569;
+}
+
+/* Turntable Tonearm / Needle */
+.vinyl-tonearm {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 28px;
+  height: 38px;
+  pointer-events: none;
+  transform-origin: 22px 5px;
+  transform: rotate(-24deg);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.vinyl-tonearm.active {
+  transform: rotate(16deg);
+}
+
+.tonearm-base {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #475569;
+  border: 1px solid #94a3b8;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+
+.tonearm-pivot {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+.tonearm-bar {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 2px;
+  height: 25px;
+  background: linear-gradient(to bottom, #94a3b8, #cbd5e1 70%, #64748b 100%);
+  transform-origin: top center;
+  transform: rotate(18deg);
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+.tonearm-cartridge {
+  position: absolute;
+  bottom: 6px;
+  left: 2px;
+  width: 4px;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 1px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+/* =========================================
+   FALLING SILVER MOON DUST / SPARKLES
+========================================= */
+.pixel-petals-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+  overflow: hidden;
+}
+
+.pixel-petal {
+  position: absolute;
+  top: -20px;
+  width: 6px;
+  height: 6px;
+  background-color: #e2e8f0;
+  opacity: calc(0.75 + var(--audio-vol, 0) * 0.25);
+  box-shadow: 
+    0 -2px 0 0 #94a3b8,
+    0 2px 0 0 #94a3b8,
+    -2px 0 0 0 #94a3b8,
+    2px 0 0 0 #94a3b8;
+  image-rendering: pixelated;
+  animation: fallSparkle linear infinite;
+}
+
+.petal-1 { left: 10%; animation-duration: 9s; animation-delay: 0s; width: 6px; height: 6px; background-color: #cbd5e1; }
+.petal-2 { left: 25%; animation-duration: 12s; animation-delay: 2s; width: 8px; height: 8px; background-color: #ffffff; }
+.petal-3 { left: 40%; animation-duration: 10s; animation-delay: 4s; width: 5px; height: 5px; background-color: #94a3b8; }
+.petal-4 { left: 55%; animation-duration: 13s; animation-delay: 1s; width: 8px; height: 8px; background-color: #f1f5f9; }
+.petal-5 { left: 70%; animation-duration: 11s; animation-delay: 3s; width: 6px; height: 6px; background-color: #cbd5e1; }
+.petal-6 { left: 85%; animation-duration: 14s; animation-delay: 5s; width: 7px; height: 7px; background-color: #ffffff; }
+.petal-7 { left: 18%; animation-duration: 15s; animation-delay: 6s; width: 5px; height: 5px; background-color: #94a3b8; }
+.petal-8 { left: 62%; animation-duration: 10.5s; animation-delay: 2.5s; width: 7px; height: 7px; background-color: #e2e8f0; }
+.petal-9 { left: 92%; animation-duration: 12.5s; animation-delay: 4.5s; width: 6px; height: 6px; background-color: #f8fafc; }
+
+@keyframes fallSparkle {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(105vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   HERO SECTION (AUDIO-REACTIVE SILVER GOTHIC)
+========================================= */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/assets/imagenes/pixilart_bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  text-align: center;
+  padding: 4rem 1.5rem 6rem;
+  image-rendering: pixelated;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(10, 15, 25, 0.42) 0%, rgba(6, 9, 15, 0.88) 100%);
+  z-index: 1;
+}
+
+.hero-fog {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, 
+    rgba(8, 12, 18, 0.2) 0%, 
+    transparent 40%, 
+    rgba(8, 12, 18, 0.85) 85%, 
+    #080b10 100%
+  );
+  z-index: 2;
+}
+
+/* Ambient reactive moon glow behind hero content */
+.hero-reactive-glow {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(calc(1 + var(--audio-bass, 0) * 0.18));
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.22) 0%, rgba(8, 12, 18, 0) 70%);
+  pointer-events: none;
+  z-index: 3;
+  opacity: calc(0.3 + var(--audio-bass, 0) * 0.5);
+  transition: opacity 0.05s ease-out, transform 0.05s ease-out;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  transform: scale(var(--audio-scale, 1));
+  transition: transform 0.05s ease-out;
+}
+
+.gothic-pixel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  color: #cbd5e1;
+  text-shadow: 0 0 10px rgba(226, 232, 240, calc(0.6 + var(--audio-bass, 0) * 0.4)), 2px 2px 0px #000;
+  margin-bottom: 0.75rem;
+}
+
+.badge-sigil {
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+}
+
+.hero-title {
+  margin: 0;
+  font-family: 'Pixelify Sans', 'Press Start 2P', monospace;
+  text-shadow: 
+    0 0 calc(18px + var(--audio-glow, 0px)) rgba(226, 232, 240, calc(0.5 + var(--audio-bass, 0) * 0.4)),
+    3px 3px 0px #000000,
+    -1px -1px 0px #1e293b;
+  transition: text-shadow 0.05s ease-out;
+}
+
+.hero-name {
+  font-size: clamp(3.5rem, 11vw, 6.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 8px;
+  display: block;
+  margin-bottom: 2.5rem;
+}
+
+/* Scroll button (matte retro pixel art, no neon) */
+.scroll-down-btn {
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+  background-color: rgba(30, 41, 59, 0.9);
+  padding: 0.85rem 1.8rem;
+  border: 2px solid #cbd5e1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 
+    0 -3px 0 0 #0f172a,
+    0 3px 0 0 #0f172a,
+    -3px 0 0 0 #0f172a,
+    3px 0 0 0 #0f172a;
+  transition: all 0.15s ease;
+  animation: floatBounce 2.4s infinite ease-in-out;
+}
+
+.scroll-down-btn:hover {
+  background-color: #334155;
+  border-color: #f1f5f9;
+  box-shadow: 
+    0 -3px 0 0 #1e293b,
+    0 3px 0 0 #1e293b,
+    -3px 0 0 0 #1e293b,
+    3px 0 0 0 #1e293b;
+  transform: scale(1.03);
+}
+
+.pixel-arrow-down {
+  color: #e2e8f0;
+  animation: bobArrow 1s infinite alternate steps(2);
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes bobArrow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(3px); }
+}
+
+/* =========================================
+   LETTER SECTION (AUDIO-REACTIVE SILVER PARCHMENT)
+========================================= */
+.letter-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 4rem 1.5rem 6rem;
+  background-color: rgba(8, 11, 16, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.letter-ambient-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%) scale(calc(1 + var(--audio-bass, 0) * 0.1));
+  width: 80%;
+  max-width: 900px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.16) 0%, rgba(8, 11, 16, 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: calc(0.5 + var(--audio-bass, 0) * 0.5);
+  transition: opacity 0.05s ease-out, transform 0.05s ease-out;
+}
+
+/* PIXEL PARCHMENT FRAME */
+.pixel-parchment-frame {
+  position: relative;
+  z-index: 10;
+  max-width: 780px;
+  width: 100%;
+  background-color: #0c1017;
+  padding: 3rem 2.5rem;
+  box-sizing: border-box;
+  
+  /* Authentic Stepped Silver Pixel Borders with subtle acoustic pulse */
+  border: 3px solid #64748b;
+  box-shadow: 
+    0 -4px 0 0 #334155,
+    0 4px 0 0 #334155,
+    -4px 0 0 0 #334155,
+    4px 0 0 0 #334155,
+    0 -8px 0 0 #0f172a,
+    0 8px 0 0 #0f172a,
+    -8px 0 0 0 #0f172a,
+    8px 0 0 0 #0f172a,
+    0 15px 50px rgba(0, 0, 0, 0.85);
+  transition: box-shadow 0.05s ease-out;
+}
+
+@media (max-width: 640px) {
+  .pixel-parchment-frame {
+    padding: 2.2rem 1.4rem;
+  }
+}
+
+/* Pixel Corner Ornaments (Silver) */
+.pixel-corner {
+  position: absolute;
+  z-index: 15;
+  width: 12px;
+  height: 12px;
+  background-color: #e2e8f0;
+  box-shadow: 
+    0 0 0 2px #0f172a,
+    0 0 8px #f8fafc;
+  image-rendering: pixelated;
+}
+
+.pixel-corner.top-left { top: -6px; left: -6px; }
+.pixel-corner.top-right { top: -6px; right: -6px; }
+.pixel-corner.bottom-left { bottom: -6px; left: -6px; }
+.pixel-corner.bottom-right { bottom: -6px; right: -6px; }
+
+/* Fluid Spectrogram Canvas */
+.fluid-spectrogram-canvas {
+  position: absolute;
+  top: -65px;
+  left: -65px;
+  right: -65px;
+  bottom: -65px;
+  width: calc(100% + 130px);
+  height: calc(100% + 130px);
+  pointer-events: none;
+  z-index: 5;
+}
+
+@media (max-width: 640px) {
+  .pixel-navbar {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    right: auto;
+  }
+
+  .letter-section {
+    padding: 3.5rem 1.35rem 5rem;
+  }
+
+  .pixel-parchment-frame {
+    padding: 2.2rem 1.25rem;
+  }
+
+  .fluid-spectrogram-canvas {
+    top: -45px;
+    left: -20px;
+    right: -20px;
+    bottom: -45px;
+    width: calc(100% + 40px);
+    height: calc(100% + 90px);
+  }
+
+  .letter-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .hero-name {
+    letter-spacing: 5px;
+  }
+
+  .pixel-back-btn-bottom {
+    font-size: 0.9rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+/* Letter Header */
+.letter-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.letter-crest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.8rem;
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(248, 250, 252, 0.7);
+}
+
+.crest-flourish {
+  letter-spacing: 2px;
+}
+
+.letter-title {
+  font-family: 'Pixelify Sans', monospace;
+  font-size: clamp(1.4rem, 4vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #ffffff;
+  margin: 0.5rem 0;
+  text-shadow: 
+    0 0 14px rgba(226, 232, 240, 0.5),
+    2px 2px 0 #000;
+}
+
+.pixel-subdivider {
+  color: #64748b;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  margin: 1rem 0;
+  text-shadow: 0 0 6px rgba(148, 163, 184, 0.5);
+  user-select: none;
+}
+
+/* Letter Body Content */
+.letter-body {
+  position: relative;
+  z-index: 10;
+  color: #f1f5f9;
+  font-size: 1.15rem;
+  line-height: 1.9;
+  letter-spacing: 0.3px;
+  text-align: justify;
+}
+
+.letter-body p {
+  margin: 0 0 1.65rem 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.letter-opening {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(248, 250, 252, 0.4);
+}
+
+.letter-quote {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(30, 41, 59, 0.45);
+  border-left: 4px solid #cbd5e1;
+  margin: 1.75rem 0 !important;
+  text-shadow: 0 0 10px rgba(226, 232, 240, 0.35);
+}
+
+.quote-mark {
+  color: #94a3b8;
+  font-weight: bold;
+}
+
+.letter-whisper {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  padding: 0.6rem 1rem;
+  background-color: rgba(51, 65, 85, 0.3);
+  border: 1px dashed #64748b;
+  display: inline-block;
+  margin-top: 1rem !important;
+}
+
+/* Letter Footer */
+.letter-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+.letter-sign-text {
+  font-size: 1.15rem;
+  color: #94a3b8;
+  font-style: italic;
+  margin-bottom: 0.25rem;
+}
+
+.letter-signature {
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 3px;
+  margin: 0.25rem 0 1.5rem;
+  text-shadow: 0 0 14px rgba(248, 250, 252, 0.6), 2px 2px 0 #000;
+}
+
+/* Pixel Wax Seal (Silver/Moonlight Medallion) */
+.pixel-wax-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  background-color: #334155;
+  border: 3px solid #94a3b8;
+  border-radius: 6px;
+  margin: 0 auto 1.5rem;
+  box-shadow: 
+    0 -3px 0 0 #1e293b,
+    0 3px 0 0 #1e293b,
+    -3px 0 0 0 #1e293b,
+    3px 0 0 0 #1e293b;
+  image-rendering: pixelated;
+  user-select: none;
+}
+
+.seal-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.seal-rose {
+  font-size: 1.5rem;
+  color: #f8fafc;
+}
+
+.seal-text {
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #f1f5f9;
+}
+
+.letter-gothic-sigil {
+  color: #64748b;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  text-shadow: 0 0 8px rgba(148, 163, 184, 0.6);
+  user-select: none;
+}
+
+/* Footer Navigation */
+.footer-navigation {
+  margin-top: 3.5rem;
+  z-index: 10;
+}
+
+.pixel-back-btn-bottom {
+  font-size: 1.05rem;
+  padding: 0.8rem 1.8rem;
+}

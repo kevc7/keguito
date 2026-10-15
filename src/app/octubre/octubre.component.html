@@ -1,0 +1,141 @@
+<div #pageContainer class="octubre-page">
+  <!-- Audio Player with piano_joinme.mp3 -->
+  <audio #audioPlayer loop src="assets/songs/piano_joinme.mp3" preload="auto"></audio>
+
+  <!-- Sticky Top Controls Bar -->
+  <nav class="pixel-navbar">
+    <a routerLink="/" class="pixel-btn pixel-back-btn">
+      <span class="pixel-arrow">◄</span> VOLVER
+    </a>
+  </nav>
+
+  <!-- Floating Silver Moon Dust / Stardust Sparkles -->
+  <div class="pixel-petals-container" aria-hidden="true">
+    <div class="pixel-petal petal-1"></div>
+    <div class="pixel-petal petal-2"></div>
+    <div class="pixel-petal petal-3"></div>
+    <div class="pixel-petal petal-4"></div>
+    <div class="pixel-petal petal-5"></div>
+    <div class="pixel-petal petal-6"></div>
+    <div class="pixel-petal petal-7"></div>
+    <div class="pixel-petal petal-8"></div>
+    <div class="pixel-petal petal-9"></div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-fog"></div>
+    <div class="hero-reactive-glow"></div>
+
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="hero-name">Kadley</span>
+      </h1>
+
+      <button (click)="scrollToLetter()" class="scroll-down-btn pixel-box-btn">
+        <span class="btn-text">Click aqui</span>
+        <span class="pixel-arrow-down">▼</span>
+      </button>
+
+      <!-- Circular Spotify-style Vinyl Record Player (No song title) -->
+      <div class="vinyl-player-widget" 
+           (click)="toggleMusic($event)" 
+           [class.playing]="isMusicPlaying"
+           role="button"
+           tabindex="0"
+           title="Reproducir / Pausar">
+        
+        <!-- Discrete 'play' pixel speech bubble -->
+        <div class="pixel-speech-bubble" *ngIf="!isMusicPlaying">play</div>
+
+        <!-- Audio Reactive Sound Waves / Ripple rings -->
+        <div class="vinyl-aura-wave wave-1"></div>
+        <div class="vinyl-aura-wave wave-2"></div>
+
+        <!-- Spinning Vinyl Disc -->
+        <div class="vinyl-disc-container">
+          <div class="vinyl-disc" [class.spinning]="isMusicPlaying">
+            <div class="vinyl-groove-ring ring-1"></div>
+            <div class="vinyl-groove-ring ring-2"></div>
+            <div class="vinyl-groove-ring ring-3"></div>
+            <div class="vinyl-specular-glare"></div>
+
+            <!-- Center Label -->
+            <div class="vinyl-center-label">
+              <div class="vinyl-center-icon">
+                <span *ngIf="!isMusicPlaying" class="state-icon play-icon">▶</span>
+                <span *ngIf="isMusicPlaying" class="state-icon moon-icon">☽</span>
+              </div>
+              <div class="vinyl-spindle-hole"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tonearm / Needle arm -->
+        <div class="vinyl-tonearm" [class.active]="isMusicPlaying">
+          <div class="tonearm-base"></div>
+          <div class="tonearm-pivot"></div>
+          <div class="tonearm-bar"></div>
+          <div class="tonearm-cartridge"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LETTER SECTION -->
+  <section id="letter-section" class="letter-section">
+    <div class="letter-ambient-glow"></div>
+
+    <div class="pixel-parchment-frame">
+      <!-- Pixel Corner Decorations -->
+      <div class="pixel-corner top-left"></div>
+      <div class="pixel-corner top-right"></div>
+      <div class="pixel-corner bottom-left"></div>
+      <div class="pixel-corner bottom-right"></div>
+
+      <!-- Fluid Spectrogram Canvas -->
+      <canvas #spectrogramCanvas class="fluid-spectrogram-canvas"></canvas>
+
+      <!-- Letter Body -->
+      <article class="letter-body">
+        <p class="letter-opening">Ha pasado tiempo.</p>
+
+        <p>
+          "Kadley", nunca volveré a escuchar a alguien más con ese nombre.
+        </p>
+
+        <p>
+          Eres tan única e inigualable para mí como persona que es indiscutible no admirarte, yo, tú eterno admirador, me deslumbra cada pedacito de tu ser; Y la preciosa persona que forma cada pedacito.
+        </p>
+
+        <p>
+          Eres la estrella que admiro sin necesidad de que me alumbre, sin necesidad de que estés, estás, estás ahí de una forma poética, algo tan onírico, me hace querer tener la mente de mil poetas para igualar y transcribir en texto la fascinación que siento de describirte, sentirte, amarte.
+        </p>
+
+        <p>
+          Tú arte es tan etereo y tú carita para mí es la obra de Dios mejor esculpida de todos los reinos, esos ojitos oscuros grandes y profundos, tus facciones tan delicadamente marcadas es definitivamente el rostro del amor de mi vida, tú figura, tú forma de andar/caminar apurada pero delicada me fascina, te amo y me encantas tanto que puedo sentir el olor de tu perfume atalcado y femenino solo con imaginarte.
+        </p>
+
+        <p>
+          Me tienes encantado, el corazón toma control de mi cuerpo cuando de pensarte se trata, quiero que seas el amor de mis ojos jóvenes y de mis ojos viejos, quiero que lo último que vea cuando sea un anciano anticuado sean tus ojos, sentir tus manos en mi cara y saber que siempre tomé la mejor decisión, la decisión de amarte y luchar por lo nuestro, no podría envejecer con una mejor sensación que esa.
+        </p>
+
+        <p>
+          Espero poder haberme comportado estos días como el hombre que mereces tener de novio, espero haberte hecho la compañía que necesitas cuando sientes que no puedes sola y espero haberte solucionado los problemas que no pudiste resolver, porque es mi misión y lo que mereces, te amo, con todo lo que soy, y todo lo que sé.
+        </p>
+
+        <p>
+          No te olvides de cortarme el pelito
+        </p>
+      </article>
+    </div>
+
+    <!-- Back to top button -->
+    <div class="footer-navigation">
+      <a routerLink="/" class="pixel-btn pixel-back-btn-bottom">
+        ◄ Regresar al Menú Principal
+      </a>
+    </div>
+  </section>
+</div>
